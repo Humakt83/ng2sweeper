@@ -1,0 +1,24 @@
+{
+  "name": "ng2sweeper",
+  "version": "0.0.1",
+  "description": "Minesweeper created with Angularjs2",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Humakt83/ng2sweeper.git"
+  },
+  "keywords": [
+    "angular2",
+    "typescript",
+    "minesweeper"
+  ],
+  "author": "Risto Salama",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Humakt83/ng2sweeper/issues"
+  },
+  "homepage": "https://github.com/Humakt83/ng2sweeper#readme"
+}
