@@ -20,5 +20,15 @@
   "bugs": {
     "url": "https://github.com/Humakt83/ng2sweeper/issues"
   },
-  "homepage": "https://github.com/Humakt83/ng2sweeper#readme"
+  "homepage": "https://github.com/Humakt83/ng2sweeper#readme",
+  "dependencies": {
+    "angular2": "2.0.0-beta.14",
+    "es6-module-loader": "^0.17.8",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "0.35.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "systemjs": "~0.19.25",
+    "zone.js": "^0.6.6"
+  }
 }
