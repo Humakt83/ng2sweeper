@@ -1,1 +1,3 @@
-<div class="sweeperBoard" sweeperBoard></div>
+<div class="sweeperBoard" sweeperBoard>
+    <slot *ngFor="#content of slots" [content]="content"></slot>
+</div>

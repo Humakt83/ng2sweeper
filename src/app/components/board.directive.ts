@@ -8,6 +8,6 @@ export class BoardDirective {
         el.nativeElement.style.height = height;
         el.nativeElement.style.maxHeight = height;
         el.nativeElement.style.width = height;
-        el.nativeElement.style.maxWidth = heigth;
+        el.nativeElement.style.maxWidth = height;
     }
 }

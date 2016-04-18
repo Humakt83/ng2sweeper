@@ -1,0 +1,8 @@
+div {
+    display: inline-block;
+}
+
+.slot {
+    width: 9%;
+    border: 1px solid black;
+}
