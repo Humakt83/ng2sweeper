@@ -1,23 +1,24 @@
 import {Component, Input} from 'angular2/core';
 import {GameService} from './game.service';
+import {Slot} from './slot';
 
 @Component({
     selector: 'slot',
-    template: `<div class="slot" (click)="clickSlot()"><span *ngIf="_clicked">{{content}}</span>&nbsp;</div>`
+    template: `<div class="slot" (click)="clickSlot()"><span *ngIf="clicked">{{content.mine ? 'x' : content.minesNear}}</span>&nbsp;</div>`
 })
 export class SlotComponent {
     
-    @Input() content: number;
+    @Input() content: Slot;
     
-    private _clicked: false;
+    private clicked: false;
     
-    constructor(private _gameService: GameService) {}
+    constructor(private gameService: GameService) {}
     
     public clickSlot() {
-        this._clicked = true;
-        if (this._gameService.isMine(this.content)) {
-            this._gameService.gameOver();    
-        }        
+        this.clicked = true;
+        if (this.content.mine) {
+            this.gameService.gameOver();    
+        }
     }
     
 }

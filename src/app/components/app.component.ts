@@ -2,6 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {BoardDirective} from './board.directive';
 import {SlotComponent} from './slot.component';
 import {GameService} from './game.service';
+import {Slot} from './slot';
 
 @Component({
     selector: 'sweeper',
@@ -11,11 +12,11 @@ import {GameService} from './game.service';
 })
 export class AppComponent {
     
-    private slots: number[] = [];
+    private slots: Slot[] = [];
     
-    constructor(private _gameService: GameService) {};
+    constructor(private gameService: GameService) {};
     
     ngOnInit() {
-        this.slots = this._gameService.initBoard();
+        this.slots = this.gameService.initBoard();
     }
 }
