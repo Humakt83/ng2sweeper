@@ -3,7 +3,7 @@ import {Directive, ElementRef, Input, Renderer} from 'angular2/core';
     selector: '[board]',
 })
 export class BoardDirective {
-    constructor(public el: ElementRef, public window: Window, public renderer: Renderer) {
+    constructor(private el: ElementRef, private window: Window, private renderer: Renderer) {
         let height = window.innerHeight;
         let native = el.nativeElement;
         renderer.setElementStyle(native, 'height', height);
