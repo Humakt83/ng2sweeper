@@ -1,4 +1,4 @@
-import { Injectable } from 'angular2/core';
+import { Injectable, EventEmitter } from 'angular2/core';
 import { Slot } from './slot';
 
 @Injectable()
@@ -7,6 +7,7 @@ export class GameService {
     private boardSize = 100;
     private amountOfMines = 20;
     private slots: Slot[] = [];
+    gameOverEmitter: EventEmitter = new EventEmitter();
     
     initBoard() {
         for (let i = 0; i < this.boardSize; i++) {            
@@ -27,13 +28,13 @@ export class GameService {
             return !slot.mine && slot.flag;    
         }).length < 1;
         if (noUnFlaggedMines && noFlaggedMinelessSlots) {
-            console.log('Victory!');
+            this.gameOverEmitter.next('Victory!');
             this.gameOver();
         }
     }
     
     gameOver() {
-        console.log('Game Over!');
+        this.gameOverEmitter.next('Game Over!');
         this.slots.forEach(function(slot) {
             slot.clicked = true;
         });
