@@ -5,22 +5,41 @@ import { Slot } from './slot';
 export class GameService {
     
     private boardSize = 100;
-    private amountOfMines = 25;
+    private amountOfMines = 20;
+    private slots: Slot[] = [];
     
     initBoard() {
-        let slots = [];
         for (let i = 0; i < this.boardSize; i++) {            
-            slots.push(new Slot(false, 0));
+            this.slots.push(new Slot(false, 0));
         }
         for (let j = 0; j < this.amountOfMines; j++) {
-            this.placeRandomMine(slots);
+            this.placeRandomMine(this.slots);
         }
-        this.countMinesNear(slots);
-        return slots;
+        this.countMinesNear(this.slots);
+        return this.slots;
+    }
+    
+    checkForVictory() {
+        let noUnFlaggedMines = this.getMines().filter(function(slot) {
+            return !slot.flag;
+        }).length < 1;
+        let noFlaggedMinelessSlots = this.slots.filter(function(slot) {
+            return !slot.mine && slot.flag;    
+        }).length < 1;
+        if (noUnFlaggedMines && noFlaggedMinelessSlots) {
+            console.log('Victory!');
+            this.gameOver();
+        }
     }
     
     gameOver() {
-        console.log("Game Over!");
+        console.log('Game Over!');
+    }
+    
+    private getMines() {
+        return this.slots.filter(function(slot) {
+            return slot.mine;
+        });
     }
     
     private placeRandomMine(slots: Slot[]) {
