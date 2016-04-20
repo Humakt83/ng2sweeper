@@ -6,17 +6,16 @@ import { FlagDirective } from './flag.directive';
 @Component({
     selector: 'slot',
     directives: [FlagDirective],
-    template: `<div [flag]="slot" class="slot" (click)="clickSlot()">
-                    <span *ngIf="slot.clicked">{{slot.mine ? 'X' : slot.minesNear}}</span>
-                    <span *ngIf="!slot.clicked && slot.flag">F</span>&nbsp;
+    template: `<div [flag]="slot" class="slot" [class.slotClicked]="slot.clicked" (click)="clickSlot()">
+                <span *ngIf="slot.clicked && !slot.mine">{{slot.minesNear > 0 ? slot.minesNear : ''}}</span>
+                    <div class="bomb" *ngIf="slot.clicked && slot.mine"></div>
+                    <div class="flag" *ngIf="!slot.clicked && slot.flag"></div>&nbsp;
                </div>`                    
 })
 export class SlotComponent {
     
     @Input() slot: Slot;
-    
-    private clicked: false;
-    
+        
     constructor(private gameService: GameService) {}
     
     public clickSlot() {
