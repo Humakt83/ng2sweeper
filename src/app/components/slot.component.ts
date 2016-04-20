@@ -7,8 +7,8 @@ import { FlagDirective } from './flag.directive';
     selector: 'slot',
     directives: [FlagDirective],
     template: `<div [flag]="slot" class="slot" (click)="clickSlot()">
-                    <span *ngIf="clicked">{{slot.mine ? 'X' : slot.minesNear}}</span>
-                    <span *ngIf="!clicked && slot.flag">F</span>&nbsp;
+                    <span *ngIf="slot.clicked">{{slot.mine ? 'X' : slot.minesNear}}</span>
+                    <span *ngIf="!slot.clicked && slot.flag">F</span>&nbsp;
                </div>`                    
 })
 export class SlotComponent {
@@ -20,10 +20,13 @@ export class SlotComponent {
     constructor(private gameService: GameService) {}
     
     public clickSlot() {
-        this.clicked = true;
+        if (this.slot.clicked) {
+            return;
+        }
+        this.slot.clicked = true;
         if (this.slot.mine) {
             this.gameService.gameOver();    
         }
     }
-        
+
 }

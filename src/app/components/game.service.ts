@@ -34,6 +34,9 @@ export class GameService {
     
     gameOver() {
         console.log('Game Over!');
+        this.slots.forEach(function(slot) {
+            slot.clicked = true;
+        });
     }
     
     private getMines() {
