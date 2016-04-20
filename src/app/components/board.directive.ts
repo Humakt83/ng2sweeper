@@ -1,6 +1,6 @@
-import {Directive, ElementRef, Input, Renderer} from 'angular2/core';
+import {Directive, ElementRef, Renderer} from 'angular2/core';
 @Directive({
-    selector: '[board]',
+    selector: '[board]'
 })
 export class BoardDirective {
     constructor(private el: ElementRef, private window: Window, private renderer: Renderer) {

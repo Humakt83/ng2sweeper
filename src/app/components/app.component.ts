@@ -10,7 +10,7 @@ import {Slot} from './slot';
     directives: [BoardDirective, SlotComponent],
     providers: [GameService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     
     private slots: Slot[] = [];
     

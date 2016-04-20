@@ -1,14 +1,19 @@
-import {Component, Input} from 'angular2/core';
-import {GameService} from './game.service';
-import {Slot} from './slot';
+import { Component, Input } from 'angular2/core';
+import { GameService } from './game.service';
+import { Slot } from './slot';
+import { FlagDirective } from './flag.directive';
 
 @Component({
     selector: 'slot',
-    template: `<div class="slot" (click)="clickSlot()"><span *ngIf="clicked">{{content.mine ? 'x' : content.minesNear}}</span>&nbsp;</div>`
+    directives: [FlagDirective],
+    template: `<div [flag]="slot" class="slot" (click)="clickSlot()">
+                    <span *ngIf="clicked">{{slot.mine ? 'X' : slot.minesNear}}</span>
+                    <span *ngIf="!clicked && slot.flag">F</span>&nbsp;
+               </div>`                    
 })
 export class SlotComponent {
     
-    @Input() content: Slot;
+    @Input() slot: Slot;
     
     private clicked: false;
     
@@ -16,9 +21,9 @@ export class SlotComponent {
     
     public clickSlot() {
         this.clicked = true;
-        if (this.content.mine) {
+        if (this.slot.mine) {
             this.gameService.gameOver();    
         }
     }
-    
+        
 }

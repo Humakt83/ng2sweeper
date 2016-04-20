@@ -36,7 +36,6 @@ export class GameService {
         for (let i = 0; i < slots.length; i++) {
             let slotOnLeftSide = i % 10 === 0;
             let slotOnRightSide = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99].indexOf(i) >= 0;
-            console.log(slotOnLeftSide + ', ' + slotOnRightSide + ', ' + i);
             let minesNear = !slotOnLeftSide && this.isInsideBoard(i - 1) && slots[i - 1].mine ? 1 : 0;
             minesNear += !slotOnRightSide && this.isInsideBoard(i + 1) && slots[i + 1].mine ? 1 : 0;
             let aboveSlot = i - 10;
