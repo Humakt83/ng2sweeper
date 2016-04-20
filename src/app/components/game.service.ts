@@ -11,7 +11,7 @@ export class GameService {
     
     initBoard() {
         for (let i = 0; i < this.boardSize; i++) {            
-            this.slots.push(new Slot(false, 0));
+            this.slots.push(new Slot(i, false, 0));
         }
         for (let j = 0; j < this.amountOfMines; j++) {
             this.placeRandomMine(this.slots);
@@ -40,41 +40,74 @@ export class GameService {
         });
     }
     
-    private getMines() {
-        return this.slots.filter(function(slot) {
-            return slot.mine;
+    turnEmptySlots(slotId: number) {
+        this.turnNeighbors([slotId], slotId);
+    }
+    
+    private turnNeighbors(idsTurned: number[], currentId: number) {
+        let slotsToTurn : Slot[] = this.getNeightborsForSlot(currentId, this.slots)
+            .filter((slot) => return !slot.mine);
+        let that = this;
+        slotsToTurn.forEach(function(slot) {
+            if (slot.minesNear === 0 && !slot.clicked && idsTurned.indexOf(slot.id) < 0) {
+                slot.clicked = true;
+                idsTurned.push(slot.id);
+                that.turnNeighbors(idsTurned, slot.id);
+            } else {
+                slot.clicked = true;
+                idsTurned.push(slot.id);
+            }            
         });
+    }
+    
+    private getMines() {
+        return this.slots.filter((slot) => return slot.mine);
     }
     
     private placeRandomMine(slots: Slot[]) {
         let idOfMine = Math.floor(Math.random() * slots.length);
         if (!slots[idOfMine].mine) {
-            slots[idOfMine] = new Slot(true, 0);
+            slots[idOfMine].mine = true;
         } else {
             this.placeRandomMine(slots);
         }
     }
     
     private countMinesNear(slots: Slot[]) {
-        for (let i = 0; i < slots.length; i++) {
-            let slotOnLeftSide = i % 10 === 0;
-            let slotOnRightSide = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99].indexOf(i) >= 0;
-            let minesNear = !slotOnLeftSide && this.isInsideBoard(i - 1) && slots[i - 1].mine ? 1 : 0;
-            minesNear += !slotOnRightSide && this.isInsideBoard(i + 1) && slots[i + 1].mine ? 1 : 0;
-            let aboveSlot = i - 10;
-            let belowSlot = i + 10;
-            minesNear += this.isInsideBoard(aboveSlot) && slots[aboveSlot].mine ? 1 : 0;
-            minesNear += !slotOnRightSide && this.isInsideBoard(aboveSlot + 1) && slots[aboveSlot + 1].mine ? 1 : 0;
-            minesNear += !slotOnLeftSide && this.isInsideBoard(aboveSlot - 1) && slots[aboveSlot - 1].mine ? 1 : 0;
-            minesNear += this.isInsideBoard(belowSlot) && slots[belowSlot].mine ? 1 : 0;
-            minesNear += !slotOnRightSide && this.isInsideBoard(belowSlot + 1) && slots[belowSlot + 1].mine ? 1 : 0;
-            minesNear += !slotOnLeftSide && this.isInsideBoard(belowSlot - 1) && slots[belowSlot - 1].mine ? 1 : 0;
-            slots[i].minesNear = minesNear;
+        for (let i = 0; i < slots.length; i++) {            
+            slots[i].minesNear = this.getNeightborsForSlot(i, slots)
+                .filter((slot) => return slot.mine)
+                .length;
         }
     }
     
     private isInsideBoard(index : number) {
         return index >= 0 && index < this.boardSize;    
+    }
+    
+    private getNeightborsForSlot(slotId: number, slots: Slot[]) {
+        let neighbors: Slot[] = [];
+        let slotOnLeftSide = this.slotIsOnLeftSide(slotId);
+        let slotOnRightSide = this.slotIsOnRightSide(slotId);
+        let aboveSlot = slotId - 10;
+        let belowSlot = slotId + 10;
+        if (!slotOnLeftSide && this.isInsideBoard(slotId - 1)) neighbors.push(slots[slotId - 1]);
+        if (!slotOnRightSide && this.isInsideBoard(slotId + 1)) neighbors.push(slots[slotId + 1]);
+        if (this.isInsideBoard(aboveSlot)) neighbors.push(slots[aboveSlot]);
+        if (this.isInsideBoard(belowSlot)) neighbors.push(slots[belowSlot]);
+        if (!slotOnLeftSide && this.isInsideBoard(aboveSlot - 1)) neighbors.push(slots[aboveSlot - 1]);
+        if (!slotOnRightSide && this.isInsideBoard(aboveSlot + 1)) neighbors.push(slots[aboveSlot + 1]);
+        if (!slotOnLeftSide && this.isInsideBoard(belowSlot - 1)) neighbors.push(slots[belowSlot - 1]);
+        if (!slotOnRightSide && this.isInsideBoard(belowSlot + 1)) neighbors.push(slots[belowSlot + 1]);
+        return neighbors;
+    }
+    
+    private slotIsOnRightSide(id : number) {
+        return [9, 19, 29, 39, 49, 59, 69, 79, 89, 99].indexOf(id) >= 0;
+    }
+    
+    private slotIsOnLeftSide(id: number) {
+        return id % 10 === 0;
     }
 
 }

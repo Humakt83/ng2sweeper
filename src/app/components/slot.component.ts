@@ -26,6 +26,8 @@ export class SlotComponent {
         this.slot.clicked = true;
         if (this.slot.mine) {
             this.gameService.gameOver();    
+        } else if (this.slot.minesNear === 0) {
+            this.gameService.turnEmptySlots(this.slot.id);
         }
     }
 
