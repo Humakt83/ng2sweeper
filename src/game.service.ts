@@ -10,6 +10,7 @@ export class GameService {
     gameOverEmitter: EventEmitter = new EventEmitter();
     
     initBoard() {
+        this.slots = [];
         for (let i = 0; i < this.boardSize; i++) {            
             this.slots.push(new Slot(i, false, 0));
         }

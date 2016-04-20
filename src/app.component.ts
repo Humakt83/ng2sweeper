@@ -11,7 +11,10 @@ import { Slot } from './slot';
             <slot *ngFor="#slot of slots" [slot]="slot"></slot>
         </div>
         <div class="gameOver" [hidden]="gameOverMessage.length < 1">
-            <div class="gameOverInner">{{gameOverMessage}}</div>
+            <div class="gameOverInner">
+                {{gameOverMessage}}<br>
+                <button class="restart" (click)="restart()">RESTART</button>
+            </div>
         </div>
     `,
     directives: [BoardDirective, SlotComponent],
@@ -30,6 +33,11 @@ export class AppComponent implements OnInit {
     };
     
     ngOnInit() {
+        this.slots = this.gameService.initBoard();
+    }
+    
+    restart() {
+        this.gameOverMessage = '';
         this.slots = this.gameService.initBoard();
     }
 }
