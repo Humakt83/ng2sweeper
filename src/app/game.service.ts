@@ -7,7 +7,7 @@ export class GameService {
     private boardSize = 100;
     private amountOfMines = 20;
     private slots: Slot[] = [];
-    gameOverEmitter: EventEmitter = new EventEmitter();
+    gameOverEmitter: EventEmitter<string> = new EventEmitter<string>();
     
     initBoard() {
         this.slots = [];
@@ -47,7 +47,7 @@ export class GameService {
     
     private turnNeighbors(idsTurned: number[], currentId: number) {
         let slotsToTurn : Slot[] = this.getNeightborsForSlot(currentId, this.slots)
-            .filter((slot) => return !slot.mine);
+          .filter((slot: Slot) => !slot.mine);
         let that = this;
         slotsToTurn.forEach(function(slot) {
             if (slot.minesNear === 0 && !slot.clicked && idsTurned.indexOf(slot.id) < 0) {
@@ -62,7 +62,7 @@ export class GameService {
     }
     
     private getMines() {
-        return this.slots.filter((slot) => return slot.mine);
+        return this.slots.filter((slot : Slot) => slot.mine);
     }
     
     private placeRandomMine(slots: Slot[]) {
@@ -77,7 +77,7 @@ export class GameService {
     private countMinesNear(slots: Slot[]) {
         for (let i = 0; i < slots.length; i++) {            
             slots[i].minesNear = this.getNeightborsForSlot(i, slots)
-                .filter((slot) => return slot.mine)
+                .filter((slot) => slot.mine)
                 .length;
         }
     }

@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     private gameOverMessage : string = '';
     
     constructor(private gameService: GameService) {
-        this.gameService.gameOverEmitter.subscribe((message) => {
+        this.gameService.gameOverEmitter.subscribe((message : string) => {
             this.gameOverMessage += message + '\n';
             console.log(this.gameOverMessage);
         });
