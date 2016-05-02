@@ -4,6 +4,7 @@ const typescript = require('gulp-typescript');
 const tscConfig = require('./tsconfig.json');
 const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync');
+const reload = browserSync.reload;
 
 gulp.task('clean', function () {
     return del('dist/**/*');
@@ -43,4 +44,5 @@ gulp.task('serve', ['build'], function() {
 });
 
 gulp.task('build', ['compile', 'copy:libs', 'copy:assets']);
+gulp.task('buildAndReload', ['build'], reload);
 gulp.task('default', ['build']);

@@ -8,7 +8,7 @@ import { Slot } from './slot';
     selector: 'sweeper',
     template: `
         <div class="sweeperBoard" board>
-            <slot *ngFor="#slot of slots" [slot]="slot"></slot>
+            <slot *ngFor="let slot of slots" [slot]="slot"></slot>
         </div>
         <div class="gameOver" [hidden]="gameOverMessage.length < 1">
             <div class="gameOverInner">
