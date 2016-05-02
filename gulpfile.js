@@ -21,6 +21,7 @@ gulp.task('copy:libs', ['clean'], function() {
     return gulp.src([
         'node_modules/angular2/bundles/angular2-polyfills.min.js',
         'node_modules/systemjs/dist/system.src.js',
+        'node_modules/systemjs/dist/system.js',
         'node_modules/rxjs/bundles/Rx.min.js',
         'node_modules/angular2/bundles/angular2.min.js',
         'node_modules/es6-shim/es6-shim.min.js',
